@@ -1,0 +1,3 @@
+module RubyGazelle
+  VERSION = "0.0.2"
+end

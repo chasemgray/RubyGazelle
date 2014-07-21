@@ -20,7 +20,10 @@ module RubyGazelle
     def initialize(login_page, username, password)
       @username = username
       response = Net::HTTP.post_form(URI(login_page), {username: username, password: password})
-      @cookie = response['Set-Cookie']
+      set_cookie = response['Set-Cookie']
+      cfduid = /__cfduid=[^;]*/.match(set_cookie)[0]
+      session = /session=[^;]*/.match(set_cookie)[0]
+      @cookie = "#{cfduid}; #{session}"
     end
 
     def self.connect(options, &block)
